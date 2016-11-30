@@ -1,0 +1,45 @@
+{
+  "name": "@berikin/fcc-random-quote-machine",
+  "version": "0.5.0",
+  "author": "José Antonio Yáñez Jiménez",
+  "description": "FreeCodeCamp random quote machine project",
+  "homepage": "https://quote.fullstackdev.es",
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:berik/fcc-random-quote-machine.git"
+  },
+  "license": "CC-BY-NC-ND-4.0",
+  "keywords": [
+    "random",
+    "quotes",
+    "free code camp",
+    "ES6",
+    "SASS"
+  ],
+  "private": false,
+  "engines": {
+    "node": "7.0.x"
+  },
+  "devDependencies": {
+    "del": ">= 2.x.x",
+    "gulp": ">= 3.9.x",
+    "gulp-concat": ">= 2.x.x",
+    "gulp-clean-css": ">= 2.x.x",
+    "gulp-htmlmin": ">= 3.x.x",
+    "gulp-sass": ">= 2.x.x",
+    "gulp-rename": ">= 1.x.x",
+    "gulp-real-favicon": ">= 0.x.x",
+    "gulp-replace": ">= 0.x.x",
+    "gulp-sourcemaps": ">= 2.x.x",
+    "gulp-uglify": ">= 2.x.x",
+    "merge-stream": ">= 1.x.x",
+    "moment": ">= 2.x.x",
+    "run-sequence": ">= 1.x.x",
+    "sitemap": ">= 1.x.x",
+    "uglify-js": ">= 2.x.x"
+  },
+  "scripts": {
+    "test": "gulpfile.js"
+  },
+  "dependencies": {}
+}

@@ -1,0 +1,87 @@
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+///
+/// @author:    José Antonio Yáñez Jiménez
+/// @created:   30/11/2016
+/// @modified:  30/11/2016
+/// @name:      Random Quote Machine Custom Animations
+/// @version:   0.5.0
+/// @site:      quote.fullstackdev.es
+///
+///////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////
+
+@mixin link-underline
+  $duration: $animationDuration
+
+  // Improves performance on mobile/tablet devices
+  // Perspective reduces blurryness of text in Chrome
+  @include prefix(transform, perspective(1px) translateZ(0))
+
+  // Improve aliasing on mobile/tablet devices
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0)
+  display: inline-block
+  overflow: hidden
+  position: relative
+  vertical-align: middle
+
+
+  &:before
+    content: ""
+    position: absolute
+    z-index: -1
+    left: 50%
+    right: 50%
+    bottom: 0
+    background: $background-color
+    height: 4px
+    @include prefix(transition-property, "left, right")
+    @include prefix(transition-duration, $duration)
+    @include prefix(transition-timing-function, ease-out)
+
+  &:hover, &:focus, &:active
+    &:before
+      left: 0
+      right: 0
+
+@mixin curl-icon
+  $duration: $animationDuration
+
+  // Improves performance on mobile/tablet devices
+  // Perspective reduces blurryness of text in Chrome
+  @include prefix(transform, perspective(1px) translateZ(0))
+
+  // Improve aliasing on mobile/tablet devices
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0)
+  display: inline-block
+  overflow: hidden
+  position: relative
+
+  &:before
+    pointer-events: none
+    position: absolute
+    content: ''
+    height: 0
+    width: 0
+    top: 0
+    left: 0
+    background: $curlColor; /* IE9 */
+    background: linear-gradient(135deg, $curlColor 45%, $curlLineColor 50%, $curlTransitionColor 56%,$curlLastColor 80%)
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff',endColorstr='#000000') /*For IE7-8-9*/
+
+    z-index: 1000;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, .4)
+    @include prefix(transition-duration, $duration)
+    @include prefix(transition-property, "width, height")
+
+  &:hover:before, &:focus:before, &:active:before
+    width: $curlWidth
+    height: $curlHeight
+
+
+@if $includeClasses
+  .anim-link-underline
+    @include link-underline()
+
+  .anim-curl-icon
+    @include curl-icon()
