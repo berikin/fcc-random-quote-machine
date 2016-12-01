@@ -3,85 +3,90 @@
 ///
 /// @author:    José Antonio Yáñez Jiménez
 /// @created:   30/11/2016
-/// @modified:  30/11/2016
+/// @modified:  01/12/2016
 /// @name:      Random Quote Machine Custom Animations
-/// @version:   0.5.0
+/// @version:   0.8.0
 /// @site:      quote.fullstackdev.es
 ///
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
 @mixin link-underline
-  $duration: $animationDuration
-
-  // Improves performance on mobile/tablet devices
-  // Perspective reduces blurryness of text in Chrome
-  @include prefix(transform, perspective(1px) translateZ(0))
+  $duration: $animation-duration
 
   // Improve aliasing on mobile/tablet devices
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0)
+  box-shadow: 0 0 1px $color-anim-box-shadow
   display: inline-block
   overflow: hidden
   position: relative
+  transform: perspective(1px) translateZ(0)
   vertical-align: middle
 
 
-  &:before
-    content: ""
-    position: absolute
-    z-index: -1
-    left: 50%
-    right: 50%
-    bottom: 0
+  &::before
     background: $background-color
+    bottom: 0
+    content: ''
     height: 4px
-    @include prefix(transition-property, "left, right")
-    @include prefix(transition-duration, $duration)
-    @include prefix(transition-timing-function, ease-out)
+    left: 50%
+    position: absolute
+    right: 50%
+    transition-duration: $duration
+    transition-property: 'left, right'
+    transition-timing-function: ease-out
+    z-index: -1
 
-  &:hover, &:focus, &:active
-    &:before
+
+  &:hover,
+  &:focus,
+  &:active
+    &::before
       left: 0
       right: 0
 
 @mixin curl-icon
-  $duration: $animationDuration
-
-  // Improves performance on mobile/tablet devices
-  // Perspective reduces blurryness of text in Chrome
-  @include prefix(transform, perspective(1px) translateZ(0))
+  $duration: $animation-duration
 
   // Improve aliasing on mobile/tablet devices
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0)
+  box-shadow: 0 0 1px $color-anim-box-shadow
   display: inline-block
   overflow: hidden
   position: relative
+  transform: perspective(1px) translateZ(0)
 
-  &:before
+  &::before
+    background: linear-gradient(135deg, $curl-color 45%, $curl-line-color 50%, $curl-transition-color 56%, $curl-last-color 80%)
+    box-shadow: 1px 1px 1px $color-anim-box-shadow-semi
+    content: ''
+    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff',endColorstr='#000000')    // For IE7-8-9
+    height: 0
+    left: 0
     pointer-events: none
     position: absolute
-    content: ''
-    height: 0
-    width: 0
     top: 0
-    left: 0
-    background: $curlColor; /* IE9 */
-    background: linear-gradient(135deg, $curlColor 45%, $curlLineColor 50%, $curlTransitionColor 56%,$curlLastColor 80%)
-    filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr='#ffffff',endColorstr='#000000') /*For IE7-8-9*/
-
+    transition-duration: $duration
+    transition-property: 'width, height'
+    width: 0
     z-index: 1000;
-    box-shadow: 1px 1px 1px rgba(0, 0, 0, .4)
-    @include prefix(transition-duration, $duration)
-    @include prefix(transition-property, "width, height")
 
-  &:hover:before, &:focus:before, &:active:before
-    width: $curlWidth
-    height: $curlHeight
+  &:hover
+    &::before
+      height: $curl-height
+      width: $curl-width
 
+  &:focus
+    &::before
+      height: $curl-height
+      width: $curl-width
 
-@if $includeClasses
+  &:active
+    &::before
+      height: $curl-height
+      width: $curl-width
+
+@if $include-classes
   .anim-link-underline
-    @include link-underline()
+    @include link-underline
 
   .anim-curl-icon
-    @include curl-icon()
+    @include curl-icon

@@ -15,6 +15,9 @@ const sitemap = require('sitemap');
 const realFavicon = require ('gulp-real-favicon');
 const runSequence = require('run-sequence');
 const fs = require('fs');
+const babel = require('gulp-babel');
+const eslint = require('gulp-eslint');
+const sassLint = require('gulp-sass-lint');
 
 const FAVICON = {
   dataFile: 'source/faviconData.json',
@@ -30,11 +33,13 @@ const PATHS = {
   sources: {
     htmlDev: 'source/index.html',
     htmlProd: 'dist/index.html',
+    jsDev: 'source/es6/script.js',
     sass: 'source/sass/*.sass'
   },
   dev: {
     html: 'build/',
-    css: 'build/css'
+    css: 'build/css',
+    js: 'build/js'
   },
   destinations: {
     html: 'dist/',
@@ -58,6 +63,10 @@ const CHANGEPATTERNS = {
   cssPrintDev: {
     pattern: /href="css\/print.min.css"/,
     change: 'href="css/print.css"'
+  },
+  jsDev: {
+    pattern: /href="js\/script.min.css"/,
+    change: 'href="js/script.css"'
   }
 };
 
@@ -213,9 +222,12 @@ gulp.task('prod', () =>
 );
 
 gulp.task('sass-dev', () =>
-    gulp.src(PATHS.sources.sass)
-        .pipe(sass().on('error', sass.logError))
-        .pipe(gulp.dest(PATHS.dev.css))
+  gulp.src(PATHS.sources.sass)
+    .pipe(sassLint())
+    .pipe(sassLint.format())
+    .pipe(sassLint.failOnError())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(gulp.dest(PATHS.dev.css))
 );
 
 gulp.task('html-dev', () =>
@@ -224,6 +236,8 @@ gulp.task('html-dev', () =>
                   CHANGEPATTERNS.cssDev.change))
     .pipe(replace(CHANGEPATTERNS.cssPrintDev.pattern,
                   CHANGEPATTERNS.cssPrintDev.change))
+    .pipe(replace(CHANGEPATTERNS.jsDev.pattern,
+                  CHANGEPATTERNS.jsDev.change))
     .pipe(htmlmin({
       collapseWhitespace: false,
       html5: true,
@@ -235,9 +249,19 @@ gulp.task('html-dev', () =>
     .pipe(gulp.dest(PATHS.dev.html))
 );
 
+gulp.task('js-dev', () =>
+  gulp.src(PATHS.sources.jsDev)
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failAfterError())
+    .pipe(babel({ presets: ['es2015'] }))
+    .pipe(gulp.dest(PATHS.dev.js))
+);
+
 //Watch task
 gulp.task('dev',() => {
-  runSequence('clean:dev',['html-dev', 'sass-dev']);
+  runSequence('clean:dev',['html-dev', 'sass-dev', 'js-dev']);
   gulp.watch(PATHS.sources.sass,['sass-dev']);
   gulp.watch(PATHS.sources.htmlDev,['html-dev']);
+  gulp.watch(PATHS.sources.jsDev,['js-dev']);
 });

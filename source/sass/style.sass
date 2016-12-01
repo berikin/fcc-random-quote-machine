@@ -3,51 +3,56 @@
 ///
 /// @author:    José Antonio Yáñez Jiménez
 /// @created:   30/11/2016
-/// @modified:  30/11/2016
+/// @modified:  01/12/2016
 /// @name:      Random Quote Machine Style
-/// @version:   0.5.0
+/// @version:   0.8.0
 /// @site:      quote.fullstackdev.es
 ///
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 
-@import url(https://fonts.googleapis.com/css?family=Calligraffitti)
+@import 'vars'
+@import 'animations'
+@import 'fonts'
 
-@import "vars"
-@import "mixins"
-@import "animations"
 
 // ============================================================================
 // Style clean
 // ============================================================================
 *
+  list-style: none
   margin: 0
   padding: 0
-  list-style: none
   vertical-align: baseline
 
-*, *:before, *:after
+*,
+*::before,
+*::after
   box-sizing: inherit
 
-a, a:hover
-  text-decoration: none
+a,
+a:hover
   color: $background-color
   padding-bottom: .3rem
+  text-decoration: none
+
 
 // ============================================================================
 // General
 // ============================================================================
 html
-  height: 100%
   box-sizing: border-box
+  height: 100%
+
 
 body
   background-color: $background-color
   color: $foreground-color
   font-family: $font-stack
-  position: relative
-  padding-bottom: 6rem
   min-height: 100%
+  padding-bottom: 6rem
+  position: relative
+
 
 // ============================================================================
 // Header section, title
@@ -67,6 +72,7 @@ header
   @media #{$break-lg}
     width: 60%
 
+
   h1
     font-family: $quote-font-stack
     @media #{$break-xs}
@@ -81,17 +87,18 @@ header
     @media #{$break-lg}
       font-size: 3.5rem
 
+
 // ============================================================================
 // Quotes section
 // ============================================================================
 #quote-box
   background-color: $foreground-color
+  border-radius: .5rem
   color: $background-color
   font-family: $quote-font-stack
-  margin: 2rem auto 0 auto
+  margin: 2rem auto 0
   padding: 1rem
   padding-bottom: 5rem
-  border-radius: .5rem
 
   @media #{$break-xs}
     font-size: 1rem
@@ -109,25 +116,27 @@ header
     font-size: 3rem
     width: 60%
 
+
 #quote-author
   font-family: $font-stack
   font-size: 1rem
   padding-right: 2rem
   text-align: right
 
-#quote-buttons button
-  background-color: $background-color
-  border: none
-  border-radius: .3rem
-  color: $foreground-color
-  cursor: pointer
-  font-family: $font-stack
-  font-size: 1rem
-  height: 3rem
-  outline: 0
-  padding: 1rem
-  width: 10rem
-  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .26)
+#quote-buttons
+  button
+    background-color: $background-color
+    border: 0
+    border-radius: .3rem
+    box-shadow: 0 2px 5px 0 $color-anim-box-shadow-semi
+    color: $foreground-color
+    cursor: pointer
+    font-family: $font-stack
+    font-size: 1rem
+    height: 3rem
+    outline: 0
+    padding: 1rem
+    width: 10rem
 
 
 // ============================================================================
@@ -147,41 +156,54 @@ footer
   text-align: center
 
   @media #{$break-xs}
-  flex-direction: column
-  .footer-left
-    width: 0
+    flex-direction: column
 
-  .footer-center, .footer-right
-    width: 100%
-    line-height: 2rem
+    .footer-left
+      width: 0
 
-  .footer-left, .footer-center, .footer-right
-    a.fa-link
-      background-color: $background-color
-      border-radius: .3rem
-      color: $foreground-color
-      height: 2rem
-      padding: .2rem
-      width: 2rem
-    a:before
-      content: "" !important
-    i
-      font-size: 1rem
+    .footer-center,
+    .footer-right
+      line-height: 2rem
+      width: 100%
+
+    .footer-left,
+    .footer-center,
+    .footer-right
+
+      .fa-link
+        background-color: $background-color
+        border-radius: .3rem
+        color: $foreground-color
+        height: 2rem
+        padding: .2rem
+        width: 2rem
+
+        &::before
+          content: '' !important
+
+      i
+        font-size: 1rem
 
   @media #{$break-md}
     flex-direction: row
-    .footer-left, .footer-center, .footer-right
+
+    .footer-left,
+    .footer-center,
+    .footer-right
       line-height: 2rem
       padding: .3rem
       width: 33%
-      a.fa-link
+
+      .fa-link
         background-color: $background-color
         border-radius: .3rem
         color: $foreground-color
         height: 2rem
         padding: .2rem
         width: 2.5rem
-      a:before
-        content: "" !important
+
+        &::before
+          content: '' !important
+
       i
         font-size: 1.5rem
